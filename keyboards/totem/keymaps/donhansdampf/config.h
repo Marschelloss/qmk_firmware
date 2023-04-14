@@ -27,3 +27,4 @@ for more options.
 #undef LOCKING_RESYNC_ENABLE
 #define NO_ACTION_ONESHOT
 
+#define MK_KINETIC_SPEED
