@@ -42,7 +42,8 @@ enum custom_keycodes {
     NAV,
     FUN,
     OS_SWAP,
-    SNAP
+    SNAP,
+    JIGGLE
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -68,6 +69,10 @@ enum custom_keycodes {
 #define FUN MO(_FUNCTION)
 
 #define XXX KC_NO
+
+// MOUSE JIGGLER ├─────────────────┐
+bool mouse_jiggler_enabled = false;
+static uint16_t mouse_jiggler_timer;
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
@@ -163,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_FUNCTION] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+              KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  QK_BOOT,
               KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,   XXXXXXX,  KC_RSFT,  KC_RCTL,  KC_RALT,  KC_RGUI,
    KC_LCBR,   KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_RCBR,
                                   _______,  _______,  _______,   _______,  _______,  _______  
@@ -187,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_MOUSE] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
                 _______,  KC_WH_D,  KC_MS_U,  KC_WH_U,   _______,  _______,  _______,  _______,  _______,   _______,
-                _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,   _______,  _______,  _______,  _______,  _______,   _______,
+                _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,   JIGGLE,   _______,  _______,  _______,  _______,   _______,
     DF(_BASED), _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______, _______,
                                     KC_BTN3,  KC_BTN2,   KC_BTN1,  _______,  _______,  _______
  )
@@ -224,9 +229,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
+bool has_mouse_report_changed(report_mouse_t* new_report, report_mouse_t* old_report) {
+    if (mouse_jiggler_enabled && timer_elapsed(mouse_jiggler_timer) > 5000) {
+        mouse_jiggler_timer = timer_read();
+        return mouse_jiggler_enabled;
+    }
+    return memcmp(new_report, old_report, sizeof(report_mouse_t));
+}
+void mouse_jiggle_toggle(void) {
+    mouse_jiggler_timer = timer_read();
+    mouse_jiggler_enabled = ! mouse_jiggler_enabled;
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+
+        case JIGGLE:
+            if (record->event.pressed) {
+                mouse_jiggle_toggle();
+                return false;
+            }
 
         case OS_SWAP: 
             if (record->event.pressed) {
