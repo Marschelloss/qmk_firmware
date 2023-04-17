@@ -30,6 +30,7 @@ enum totem_layers {
     _NUMBER,
     _NAVIGON,
     _FUNCTION,
+    _MOUSE
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -91,10 +92,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_BASED] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,      KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
-              GUI_A,    ALT_S,    CTL_D,    SHT_F,    KC_G,      KC_H,     SHT_J,    CTL_K,    ALT_L,    GUI_S,
-    KC_DEL,   KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_SCLN,
-                                  KC_ESC,   KC_SPC,   NUM,       NAV,      KC_LSFT,  KC_ENT
+                KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,      KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
+                GUI_A,    ALT_S,    CTL_D,    SHT_F,    KC_G,      KC_H,     SHT_J,    CTL_K,    ALT_L,    GUI_S,
+    DF(_MOUSE), KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_SCLN,
+                                    KC_ESC,   KC_SPC,   NUM,       NAV,      KC_LSFT,  KC_ENT
  ),
 
  /*
@@ -162,10 +163,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_FUNCTION] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              QK_BOOT,  KC_BTN1,  KC_MS_U,  KC_BTN3,  XXXXXXX,   XXXXXXX,  KC_F7,    KC_F8,    KC_F9,    KC_F12,
-              DB_TOGG,  KC_MS_L,  KC_MS_D,  KC_MS_R,  XXXXXXX,   XXXXXXX,  KC_F4,    KC_F5,    KC_F6,    KC_F11,
-   KC_LCBR,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F10,   KC_RCBR,
+              KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,
+              KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,   XXXXXXX,  KC_RSFT,  KC_RCTL,  KC_RALT,  KC_RGUI,
+   KC_LCBR,   KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_RCBR,
                                   _______,  _______,  _______,   _______,  _______,  _______  
+ ),
+ /*
+   ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
+
+   ┌─────────────────────────────────────────────────┐
+   │ M O U S E                                       │      ╭╮╭╮╭╮╭╮
+   └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
+             ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
+     ╌┄┈┈───═╡  RESET  │         │         │         │         ││         │   F7    │   F8    │   F9    │   F12   │
+             ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
+             │ DEBUG   │ QWERTY  │         │         │         ││         │   F4    │   F5    │   F6    │   F11   │
+   ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
+   │  MAKE   │ OS SWAP │ COLEMAK │         │         │         ││         │   F1    │   F2    │   F3    │   F10   │   F13   │
+   └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
+                                 │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
+                                 └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
+
+   [_MOUSE] = LAYOUT(
+ //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+                _______,  KC_WH_D,  KC_MS_U,  KC_WH_U,   _______,  _______,  _______,  _______,  _______,   _______,
+                _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,   _______,  _______,  _______,  _______,  _______,   _______,
+    DF(_BASED), _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______, _______,
+                                    KC_BTN3,  KC_BTN2,   KC_BTN1,  _______,  _______,  _______
  )
 /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
