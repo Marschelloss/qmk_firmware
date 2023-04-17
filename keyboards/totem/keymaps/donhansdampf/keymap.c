@@ -14,6 +14,7 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include "totem.h"
+#include "print.h"
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ D E F I N I T I O N S                                                                                                  │
@@ -57,14 +58,15 @@ enum custom_keycodes {
 // RIGHT HAND HOME ROW MODS QWERTY ├─────────────────┐
 
 #define SHT_J MT(MOD_RSFT, KC_J)
-#define CTL_K MT(MOD_LCTL, KC_K)
-#define ALT_L MT(MOD_LALT, KC_L)
-#define GUI_S MT(MOD_LGUI, KC_QUOT)
+#define CTL_K MT(MOD_RCTL, KC_K)
+#define ALT_L MT(MOD_RALT, KC_L)
+#define GUI_S MT(MOD_RGUI, KC_QUOT)
 
 #define NUM LT(_NUMBER, KC_TAB)
 #define NAV LT(_NAVIGON, KC_BSPC)
 #define FUN MO(_FUNCTION)
 
+#define XXX KC_NO
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
@@ -91,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
               KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,      KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
               GUI_A,    ALT_S,    CTL_D,    SHT_F,    KC_G,      KC_H,     SHT_J,    CTL_K,    ALT_L,    GUI_S,
-    KC_DEL,   KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_COLON,
+    KC_DEL,   KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_SCLN,
                                   KC_ESC,   KC_SPC,   NUM,       NAV,      KC_LSFT,  KC_ENT
  ),
 
@@ -113,10 +115,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NUMBER] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              KC_5,    KC_6,    KC_7,    KC_8,    KC_SCLN,   _______,  _______,   _______,  _______, _______,
+              KC_5,    KC_6,    KC_7,    KC_8,    KC_EQL,    _______,  _______,   _______,  _______, _______,
               KC_1,    KC_2,    KC_3,    KC_4,    KC_MINS,   _______,  KC_RSFT,   KC_RCTL,  KC_RALT, KC_RGUI,
-    SNAP,     KC_EQL,  KC_GRV,  KC_9,    KC_0,    _______,   _______,  _______,   _______,  _______, _______,  _______,
-                                _______, _______, _______,   FUN,      KC_LSFT,   _______
+    KC_LPRN,  KC_BSLS, KC_GRV,  KC_9,    KC_0,    XXX,       _______,  _______,   _______,  _______, _______,  KC_RPRN,
+                                XXX,     XXX,     _______,   FUN,      KC_LSFT,   _______
  ),
 
  /*
@@ -137,10 +139,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NAVIGON] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-            _______,  _______,   _______,  _______, _______,   _______,  KC_LBRC,  KC_RBRC,  KC_LCBR,  KC_RCBR,
-            KC_LGUI,  KC_LALT,   KC_LCTL,  KC_LSFT, _______,   KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, _______,
-    SNAP,   _______,  _______,   _______,  _______, _______,   KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   _______, _______,
-                                 _______,  _______, FUN,       _______,  KC_LSFT,  _______
+             _______,  _______,   _______,  _______, DM_REC1,   KC_MUTE,  KC_MPRV,  KC_MPLY,  KC_MNXT,  _______,
+             KC_LGUI,  KC_LALT,   KC_LCTL,  KC_LSFT, DM_PLY1,   KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, CW_TOGG,
+    KC_LBRC, _______,  _______,   _______,  _______, DM_RSTP,   KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_PSCR, KC_RBRC,
+                                  _______,  _______, FUN,       _______,  KC_LSFT,  _______
  ),
  /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -162,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
               QK_BOOT,  KC_BTN1,  KC_MS_U,  KC_BTN3,  XXXXXXX,   XXXXXXX,  KC_F7,    KC_F8,    KC_F9,    KC_F12,
               DB_TOGG,  KC_MS_L,  KC_MS_D,  KC_MS_R,  XXXXXXX,   XXXXXXX,  KC_F4,    KC_F5,    KC_F6,    KC_F11,
-   OS_SWAP,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F10,   KC_F13,
+   KC_LCBR,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F10,   KC_RCBR,
                                   _______,  _______,  _______,   _______,  _______,  _______  
  )
 /*
@@ -246,6 +248,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           break;
     }
     return true;
+}
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(_NUMBER, KC_TAB):
+            return true;
+        case LT(_NAVIGON, KC_BSPC):
+            return true;
+        default:
+            return false;
+    }
 }
 /*
   ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
