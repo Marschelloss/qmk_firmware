@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
               KC_5,    KC_6,    KC_7,    KC_8,    KC_EQL,    _______,  _______,   _______,  _______, _______,
               KC_1,    KC_2,    KC_3,    KC_4,    KC_MINS,   _______,  KC_RSFT,   KC_RCTL,  KC_RALT, KC_RGUI,
-    KC_LPRN,  KC_BSLS, KC_GRV,  KC_9,    KC_0,    XXX,       _______,  _______,   _______,  _______, _______,  KC_RPRN,
+    KC_LPRN,  KC_BSLS, KC_GRV,  KC_9,    KC_0,    XXXXXXX,       _______,  _______,   _______,  _______, _______,  KC_RPRN,
                                 XXX,     XXX,     _______,   FUN,      KC_LSFT,   _______
  ),
 
@@ -168,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_FUNCTION] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  QK_BOOT,
+              KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,   XXXXXXX,  RGB_TOG,  RGB_M_T,  XXXXXXX,  QK_BOOT,
               KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,   XXXXXXX,  KC_RSFT,  KC_RCTL,  KC_RALT,  KC_RGUI,
    KC_LCBR,   KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_RCBR,
                                   _______,  _______,  _______,   _______,  _______,  _______  
@@ -192,8 +192,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_MOUSE] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
                 _______,  KC_WH_D,  KC_MS_U,  KC_WH_U,   _______,  _______,  _______,  _______,  _______,   _______,
-                _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,   JIGGLE,   _______,  _______,  _______,  _______,   _______,
-    DF(_BASED), _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______, _______,
+                _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,   _______,   _______,  _______,  _______,  _______,   _______,
+    DF(_BASED), _______,  _______,  _______,  _______,   _______,     _______,  _______,  _______,  _______,   _______, _______,
                                     KC_BTN3,  KC_BTN2,   KC_BTN1,  _______,  _______,  _______
  )
 /*
@@ -229,28 +229,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
-bool has_mouse_report_changed(report_mouse_t* new_report, report_mouse_t* old_report) {
-    if (mouse_jiggler_enabled && timer_elapsed(mouse_jiggler_timer) > 5000) {
-        mouse_jiggler_timer = timer_read();
-        return mouse_jiggler_enabled;
-    }
-    return memcmp(new_report, old_report, sizeof(report_mouse_t));
-}
-void mouse_jiggle_toggle(void) {
-    mouse_jiggler_timer = timer_read();
-    mouse_jiggler_enabled = ! mouse_jiggler_enabled;
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
-        case JIGGLE:
-            if (record->event.pressed) {
-                mouse_jiggle_toggle();
-                return false;
-            }
-
-        case OS_SWAP: 
+        case OS_SWAP:
             if (record->event.pressed) {
                 if (!keymap_config.swap_lctl_lgui) {
                   keymap_config.swap_lctl_lgui = false;  // ─── MAC
@@ -304,6 +286,41 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
             return true;
         default:
             return false;
+    }
+}
+
+void keyboard_pre_init_kb(void) {
+    // Power on the addressable RGB LED on XIAO RP2040
+    setPinOutput(GP11);
+    writePinHigh(GP11);
+    // Turn off the common anode RGB LED on XIAO RP2040.
+    setPinInputHigh(GP16);
+    setPinInputHigh(GP17);
+    setPinInputHigh(GP25);
+}
+
+void housekeeping_task_user(void) {
+    switch (get_highest_layer(layer_state | default_layer_state)) {
+        case 0:
+            rgblight_setrgb_at(RGB_MAGENTA, 0);
+            rgblight_setrgb_at(RGB_MAGENTA, 1);
+            break;
+        case 1:
+            rgblight_setrgb_at(RGB_CORAL, 0);
+            rgblight_setrgb_at(RGB_CORAL, 1);
+            break;
+        case 2:
+            rgblight_setrgb_at(RGB_CORAL, 0);
+            rgblight_setrgb_at(RGB_CORAL, 1);
+            break;
+        case 3:
+            rgblight_setrgb_at(RGB_GREEN, 0);
+            rgblight_setrgb_at(RGB_GREEN, 1);
+            break;
+        case 4:
+            rgblight_setrgb_at(RGB_BLUE, 0);
+            rgblight_setrgb_at(RGB_BLUE, 1);
+            break;
     }
 }
 /*

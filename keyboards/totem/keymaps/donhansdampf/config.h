@@ -8,7 +8,6 @@ for more options.
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 
-
 //#define TAPPING_TERM 170
 #define TAPPING_TERM 230
 
@@ -22,6 +21,15 @@ for more options.
 #undef LOCKING_RESYNC_ENABLE
 #define NO_ACTION_ONESHOT
 
+// RGB
+#undef RGB_DI_PIN
+#define RGB_DI_PIN GP12
+#undef RGBLED_NUM
+#define RGBLED_NUM 2
+#undef RGBLED_SPLIT
+#define RGBLED_SPLIT {1, 1}
+
+// Mouse Keys
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
 #undef MOUSEKEY_INTERVAL
