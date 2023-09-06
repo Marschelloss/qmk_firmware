@@ -14,9 +14,6 @@ for more options.
 #define HOLD_ON_OTHER_KEY_PRESS
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-// Prevent normal rollover on alphas from accidentally triggering mods.
-#define IGNORE_MOD_TAP_INTERRUPT
-
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
 #define NO_ACTION_ONESHOT
@@ -24,6 +21,7 @@ for more options.
 // RGB
 #undef RGB_DI_PIN
 #define RGB_DI_PIN GP12
+#define WS2812_DI_PIN GP12
 #undef RGBLED_NUM
 #define RGBLED_NUM 2
 #undef RGBLED_SPLIT

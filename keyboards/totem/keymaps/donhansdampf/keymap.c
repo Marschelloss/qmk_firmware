@@ -30,7 +30,9 @@ enum totem_layers {
     _NUMBER,
     _NAVIGON,
     _FUNCTION,
-    _MOUSE
+    _MOUSE,
+    _GAME,
+    _GAMEFN
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -169,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_FUNCTION] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
               KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXXXXXX,   XXXXXXX,  RGB_TOG,  RGB_M_T,  XXXXXXX,  QK_BOOT,
-              KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,   XXXXXXX,  KC_RSFT,  KC_RCTL,  KC_RALT,  KC_RGUI,
+              KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXXXXXX,   DF(_GAME),  KC_RSFT,  KC_RCTL,  KC_RALT,  KC_RGUI,
    KC_LCBR,   KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_RCBR,
                                   _______,  _______,  _______,   _______,  _______,  _______  
  ),
@@ -195,6 +197,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,   _______,  _______,  _______,  _______,  _______,   _______,
     DF(_BASED), _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______, _______,
                                     KC_BTN3,  KC_BTN2,   KC_BTN1,  _______,  _______,  _______
+ ),
+
+   [_GAME] = LAYOUT(
+ //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+                KC_TAB,   KC_Q,     KC_X,         KC_E,      KC_R,           KC_MUTE,  KC_MPRV,  KC_MPLY,  KC_MNXT,   _______,
+                KC_LCTL,  KC_A,     KC_W,         KC_D,      KC_F,           _______,  _______,  _______,  _______,   _______,
+    KC_LALT,    KC_ESC,   KC_Z,     KC_S,         KC_C,      KC_V,           _______,  _______,  _______,  _______,   _______, _______,
+                                    MO(_GAMEFN),  KC_SPC,    KC_LSFT,        _______,  _______,  _______
+ ),
+
+   [_GAMEFN] = LAYOUT(
+ //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
+                KC_F1,    KC_F2,    KC_F3,    KC_F4,     KC_F6,    _______,  _______,  _______,  _______,   _______,
+                KC_1,     KC_2,     KC_3,     KC_4,      KC_5,     _______,  _______,  _______,  _______,   _______,
+    DF(_BASED), KC_T,     KC_N,     KC_M,     KC_G,      KC_B,     _______,  _______,  _______,  _______,   _______, _______,
+                                    _______,  _______,   _______,  _______,  _______,  _______
  )
 /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -320,6 +338,14 @@ void housekeeping_task_user(void) {
         case 4:
             rgblight_setrgb_at(RGB_BLUE, 0);
             rgblight_setrgb_at(RGB_BLUE, 1);
+            break;
+        case 5:
+            rgblight_setrgb_at(RGB_GREEN, 0);
+            rgblight_setrgb_at(RGB_GREEN, 1);
+            break;
+        case 6:
+            rgblight_setrgb_at(RGB_RED, 0);
+            rgblight_setrgb_at(RGB_RED, 1);
             break;
     }
 }
