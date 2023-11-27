@@ -66,17 +66,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 enum combo_events {
     COMBO_RET,
     COMBO_ESC,
-    COMBO_TAB,
+    COMBO_LPRN,
+    COMBO_RPRN,
 };
 
 const uint16_t PROGMEM combo_esc[]    = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_ret[]    = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_tab[]    = {KC_LSFT, KC_BSPC, COMBO_END};
+const uint16_t PROGMEM combo_lprn[]    = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM combo_rprn[]    = {KC_M, KC_COMM, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_ESC] = COMBO(combo_esc, KC_ESC),
     [COMBO_RET] = COMBO(combo_ret, KC_ENT),
-    [COMBO_TAB] = COMBO(combo_tab, KC_TAB),
+    [COMBO_LPRN] = COMBO(combo_lprn, KC_LPRN),
+    [COMBO_RPRN] = COMBO(combo_rprn, KC_RPRN),
 };
 #endif
 
