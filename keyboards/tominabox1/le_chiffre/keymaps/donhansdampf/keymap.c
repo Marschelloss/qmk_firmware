@@ -24,6 +24,10 @@ enum layers {
 
 enum custom_keycodes {
     SS_QUOT = SAFE_RANGE,
+    SS_UE,
+    SS_AE,
+    SS_OE,
+    SS_SZ,
 };
 
 
@@ -50,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_SYM] = LAYOUT(
         KC_F5, KC_F6,  KC_F7,  KC_F8,  KC_NO, KC_NO, KC_NO,   KC_MPRV,       KC_MPLY,       KC_MNXT,       KC_MUTE,
         KC_F1, KC_F2,  KC_F3,  KC_F4,  KC_NO,        KC_NO,   OSM(MOD_RSFT), OSM(MOD_RCTL), OSM(MOD_RALT), OSM(MOD_RGUI),
-        KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,        RGB_TOG, RGB_MOD,       RGB_HUI,       RGB_SAI,       RGB_VAI,
+        KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,        KC_NO,   KC_NO,         KC_NO,         KC_NO,         KC_NO,
                                KC_NO,  KC_NO,        QK_BOOT, KC_NO
     )
 };
@@ -66,20 +70,41 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 enum combo_events {
     COMBO_RET,
     COMBO_ESC,
-    COMBO_LPRN,
-    COMBO_RPRN,
+    COMBO_WINDOW_NXT,
+    COMBO_WINDOW_PRV,
+    COMBO_UE,
+    COMBO_AE,
+    COMBO_OE,
+    COMBO_SZ,
+    COMBO_ALFRED,
+    COMBO_PASS,
+    COMBO_EMOJI,
 };
 
 const uint16_t PROGMEM combo_esc[]    = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_ret[]    = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_lprn[]    = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM combo_rprn[]    = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_window_nxt[]    = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM combo_window_prv[]    = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_ue[]    = {KC_U, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_ae[]    = {KC_A, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_oe[]    = {KC_O, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_sz[]    = {KC_S, KC_Z, COMBO_END};
+const uint16_t PROGMEM combo_alfred[]    = {KC_A, KC_SPC, COMBO_END};
+const uint16_t PROGMEM combo_pass[]    = {KC_A, KC_F, COMBO_END};
+const uint16_t PROGMEM combo_emoji[]    = {KC_A, KC_D, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_ESC] = COMBO(combo_esc, KC_ESC),
     [COMBO_RET] = COMBO(combo_ret, KC_ENT),
-    [COMBO_LPRN] = COMBO(combo_lprn, KC_LPRN),
-    [COMBO_RPRN] = COMBO(combo_rprn, KC_RPRN),
+    [COMBO_WINDOW_NXT] = COMBO(combo_window_nxt, LGUI(KC_TAB)),
+    [COMBO_WINDOW_PRV] = COMBO(combo_window_prv, LGUI(LSFT(KC_TAB))),
+    [COMBO_UE] = COMBO(combo_ue, SS_UE),
+    [COMBO_AE] = COMBO(combo_ae, SS_AE),
+    [COMBO_OE] = COMBO(combo_oe, SS_OE),
+    [COMBO_SZ] = COMBO(combo_sz, SS_SZ),
+    [COMBO_ALFRED] = COMBO(combo_alfred, LGUI(KC_SPC)),
+    [COMBO_PASS] = COMBO(combo_pass, LGUI(LSFT(KC_SPC))),
+    [COMBO_EMOJI] = COMBO(combo_emoji, LGUI(LCTL(KC_SPC))),
 };
 #endif
 
@@ -89,6 +114,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SS_QUOT:
             if (record->event.pressed) {
                 SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
+            }
+            return false;
+        case SS_UE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT("'")"u");
+            }
+            return false;
+        case SS_AE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT("'")"a");
+            }
+            return false;
+        case SS_OE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT("'")"o");
+            }
+            return false;
+        case SS_SZ:
+            if (record->event.pressed) {
+                SEND_STRING(SS_RALT("s"));
             }
             return false;
     }
