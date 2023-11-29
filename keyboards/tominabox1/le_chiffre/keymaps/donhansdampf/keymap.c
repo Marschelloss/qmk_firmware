@@ -25,6 +25,8 @@ enum layers {
 enum custom_keycodes {
     SS_QUOT = SAFE_RANGE,
     SS_DQT,
+    SS_TILD,
+    SS_GRV,
     SS_UE,
     SS_AE,
     SS_OE,
@@ -41,15 +43,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           MO(1), KC_SPC,            KC_LSFT, MO(2)
     ),
 	[_NUM] = LAYOUT(
-        KC_TRNS,       KC_TRNS,       KC_TAB,        KC_TRNS,       KC_TRNS,      KC_NO,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,
-        OSM(MOD_LGUI), OSM(MOD_LALT), OSM(MOD_LCTL), OSM(MOD_LSFT), KC_TRNS,               KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_BSPC,
-        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
-                                                     KC_TRNS,       KC_TRNS,               KC_TRNS, KC_TRNS
+        KC_TRNS,       KC_TRNS,       KC_TAB,        KC_TRNS,       KC_TRNS,      KC_NO,   KC_NO,   KC_1,    KC_2,    KC_3,    KC_4,
+        OSM(MOD_LGUI), OSM(MOD_LALT), OSM(MOD_LCTL), OSM(MOD_LSFT), KC_TRNS,               KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MINS,
+        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,               KC_NO,   KC_5,    KC_6,    KC_7,    KC_8,
+                                                     KC_TRNS,       KC_SPC,                LSFT_T(KC_9), LT(2, KC_0)
     ),
 	[_NAV] = LAYOUT(
-        KC_LBRC,    KC_RBRC,    KC_LCBR, KC_RCBR, KC_NO, KC_NO, KC_NO,   KC_GRV,  KC_TILD, KC_PIPE,    KC_BSLS,
-        KC_EQL,     KC_MINS,    KC_SCLN, KC_COLN, KC_NO,        KC_NO,   SS_QUOT, SS_DQT,  RALT(KC_S), LSFT(KC_QUOT),
-        KC_PLUS,    KC_UNDS,    KC_LPRN, KC_RPRN, KC_NO,        KC_NO,   KC_NO,   KC_NO,   KC_NO,      KC_NO,
+        KC_LBRC,    KC_RBRC,    KC_LCBR, KC_RCBR, KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,      KC_NO,
+        KC_EQL,     SS_TILD,    KC_SCLN, KC_COLN, KC_NO,        KC_NO,   SS_QUOT, SS_DQT,  RALT(KC_S), LSFT(KC_QUOT),
+        KC_PLUS,    SS_GRV,     KC_LPRN, KC_RPRN, KC_NO,        KC_NO,   KC_PIPE, KC_BSLS, KC_NO,      KC_NO,
                                          KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS
     ),
 	[_SYM] = LAYOUT(
@@ -120,6 +122,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SS_DQT:
             if (record->event.pressed) {
                 SEND_STRING(SS_LSFT("'") SS_TAP(X_SPC));
+            }
+            return false;
+        case SS_GRV:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
+            }
+            return false;
+        case SS_TILD:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
             }
             return false;
         case SS_UE:
