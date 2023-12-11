@@ -15,4 +15,4 @@
  */
 #pragma once
 
-#define COMBO_TERM 25
+#define COMBO_TERM 35

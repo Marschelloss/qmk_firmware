@@ -96,7 +96,7 @@ const uint16_t PROGMEM combo_ue[]    = {KC_U, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_ae[]    = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_oe[]    = {KC_O, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_sz[]    = {KC_S, KC_Z, COMBO_END};
-const uint16_t PROGMEM combo_alfred[]    = {KC_A, KC_SPC, COMBO_END};
+const uint16_t PROGMEM combo_alfred[]    = {KC_SPC, KC_LSFT, COMBO_END};
 const uint16_t PROGMEM combo_pass[]    = {KC_A, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_emoji[]    = {KC_A, KC_D, COMBO_END};
 
