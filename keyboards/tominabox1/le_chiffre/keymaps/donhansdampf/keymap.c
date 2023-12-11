@@ -73,8 +73,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 enum combo_events {
     COMBO_RET,
     COMBO_ESC,
-    COMBO_WINDOW_NXT,
-    COMBO_WINDOW_PRV,
+    COMBO_WINDOW_LFT,
+    COMBO_WINDOW_RGT,
+    COMBO_WINDOW_UPP,
+    COMBO_SCREENSHOT,
     COMBO_UE,
     COMBO_AE,
     COMBO_OE,
@@ -86,8 +88,10 @@ enum combo_events {
 
 const uint16_t PROGMEM combo_esc[]    = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_ret[]    = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_window_nxt[]    = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM combo_window_prv[]    = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_window_lft[]    = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM combo_window_rgt[]    = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_window_upp[]    = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM combo_screenshot[]    = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_ue[]    = {KC_U, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_ae[]    = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM combo_oe[]    = {KC_O, KC_E, COMBO_END};
@@ -99,8 +103,10 @@ const uint16_t PROGMEM combo_emoji[]    = {KC_A, KC_D, COMBO_END};
 combo_t key_combos[] = {
     [COMBO_ESC] = COMBO(combo_esc, KC_ESC),
     [COMBO_RET] = COMBO(combo_ret, KC_ENT),
-    [COMBO_WINDOW_NXT] = COMBO(combo_window_nxt, LGUI(KC_TAB)),
-    [COMBO_WINDOW_PRV] = COMBO(combo_window_prv, LGUI(LSFT(KC_TAB))),
+    [COMBO_WINDOW_LFT] = COMBO(combo_window_lft, LALT(LCTL(KC_LEFT))),
+    [COMBO_WINDOW_RGT] = COMBO(combo_window_rgt, LALT(LCTL(KC_RGHT))),
+    [COMBO_WINDOW_UPP] = COMBO(combo_window_upp, LALT(LCTL(KC_UP))),
+    [COMBO_SCREENSHOT] = COMBO(combo_screenshot, LGUI(LSFT(KC_4))),
     [COMBO_UE] = COMBO(combo_ue, SS_UE),
     [COMBO_AE] = COMBO(combo_ae, SS_AE),
     [COMBO_OE] = COMBO(combo_oe, SS_OE),
