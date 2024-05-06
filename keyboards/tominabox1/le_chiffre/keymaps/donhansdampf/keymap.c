@@ -43,10 +43,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                      KC_TRNS,       KC_SPC,                LSFT_T(KC_9), LT(2, KC_0)
     ),
 	[_NAV] = LAYOUT(
-        KC_MUTE,    KC_MPRV,    KC_MPLY, KC_MNXT, KC_NO, KC_NO, KC_F11,  KC_F1,   KC_F2,   KC_F3,      KC_F4,
-        KC_NO,      KC_NO,      KC_NO,   KC_NO,   KC_NO,        KC_HOME, KC_PGDN, KC_PGUP, KC_END,     KC_DEL,
-        KC_NO,      KC_NO,      KC_NO,   KC_NO,   KC_NO,        KC_F12,  KC_F5,   KC_F6,   KC_F7,      KC_F8,
-                                         KC_TRNS, KC_TRNS,      QK_BOOT, KC_TRNS
+        KC_MUTE,    KC_MPRV,    KC_MPLY, KC_MNXT,      KC_NO, KC_NO, KC_F11,  KC_F1,   KC_F2,   KC_F3,      KC_F4,
+        KC_NO,      KC_NO,      KC_NO,   KC_NO,        KC_NO,        KC_HOME, KC_PGDN, KC_PGUP, KC_END,     KC_DEL,
+        KC_NO,      KC_NO,      KC_NO,   KC_NO,        KC_NO,        KC_F12,  KC_F5,   KC_F6,   KC_F7,      KC_F8,
+                                         LGUI(KC_SPC), KC_TRNS,      QK_BOOT, KC_TRNS
     ),
 	[_SYM] = LAYOUT(
         KC_F5, KC_F6,  KC_F7,  KC_F8,  KC_NO, KC_NO, KC_NO,   KC_MPRV,       KC_MPLY,       KC_MNXT,       KC_MUTE,
