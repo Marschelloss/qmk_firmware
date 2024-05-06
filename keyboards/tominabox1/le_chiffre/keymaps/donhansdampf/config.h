@@ -15,4 +15,8 @@
  */
 #pragma once
 
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+
 #define COMBO_TERM 35
+#define TAPPING_TERM 250
