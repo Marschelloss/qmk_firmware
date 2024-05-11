@@ -37,10 +37,14 @@ enum totem_layers {
 // └─────────────────────────────────────────────────┘
 
 enum custom_keycodes {
-    NUM,
+    NUM = SAFE_RANGE,
     NAV,
     OS_SWAP,
     SNAP,
+    SS_QUOT,
+    SS_DQT,
+    SS_GRV,
+    SS_TILD,
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -77,7 +81,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL,    CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,           KC_B,               KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),  KC_RALT,
                                            KC_NO,       MO(_NUMBER),    LGUI_T(KC_SPC),     KC_LSFT,  LT(_NAVIGON, KC_DQUO), KC_NO
  ),
-
  /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
    
@@ -97,8 +100,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_NUMBER] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
                 KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,   KC_PLUS,      KC_1,         KC_2,      KC_3,     KC_4,
-                KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_TILD,   KC_LEFT,      KC_DOWN,      KC_UP,     KC_RIGHT, KC_MINS,
-    DF(_MOUSE), KC_DQT,  KC_QUOT, KC_LPRN, KC_RPRN, KC_GRV,    KC_EQL,       KC_5,         KC_6,      KC_7,     KC_8,   KC_NO,
+                KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SS_TILD,   KC_LEFT,      KC_DOWN,      KC_UP,     KC_RIGHT, KC_MINS,
+    DF(_MOUSE), KC_DQT,  KC_QUOT, KC_LPRN, KC_RPRN, SS_GRV,    KC_EQL,       KC_5,         KC_6,      KC_7,     KC_8,   KC_NO,
                                   KC_NO,   KC_NO,   KC_NO,     LSFT_T(KC_9), KC_0,         KC_NO
  ),
 
@@ -203,7 +206,7 @@ combo_t key_combos[COMBO_COUNT] = {
   [M_COMM_COLN] = COMBO(m_comm_coln, KC_COLN),
   [COMM_DOT_SCLN] = COMBO(comm_dot_scln, KC_SCLN),
   [C_V_TAB] = COMBO(c_v_tab, KC_TAB),
-  [X_C_QUOT] = COMBO(x_c_quot, KC_QUOT),
+  [X_C_QUOT] = COMBO(x_c_quot, SS_QUOT),
 
 };
 
@@ -232,8 +235,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     }
     break;
+  case SS_QUOT:
+    if (record->event.pressed) {
+      SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
+    }
+    return false;
+  case SS_GRV:
+    if (record->event.pressed) {
+      SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
+    }
+    return false;
+  case SS_TILD:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
+    }
+    return false;
   }
-return true;
+  return true;
 }
 
 void keyboard_pre_init_kb(void) {
