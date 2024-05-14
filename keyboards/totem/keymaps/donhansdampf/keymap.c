@@ -13,6 +13,7 @@
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+#include "eeconfig.h"
 #include "totem.h"
 #include "print.h"
 
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
                 KC_Q,            KC_W,     KC_E,        KC_R,           KC_T,               KC_Y,     KC_U,                 KC_I,     KC_O,     KC_P,
                 KC_A,            KC_S,     KC_D,        KC_F,           KC_G,               KC_H,     KC_J,                 KC_K,     KC_L,     KC_BSPC,
-    KC_LCTL,    CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,           KC_B,               KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),  KC_RALT,
+    DF(_MOUSE), CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,           KC_B,               KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),  KC_RALT,
                                            KC_NO,       MO(_NUMBER),    LGUI_T(KC_SPC),     KC_LSFT,  LT(_NAVIGON, KC_DQUO), KC_NO
  ),
  /*
@@ -99,9 +100,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NUMBER] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-                KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,   KC_PLUS,      KC_1,         KC_2,      KC_3,     KC_4,
+                KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,   KC_DOT,       KC_1,         KC_2,      KC_3,     KC_4,
                 KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SS_TILD,   KC_LEFT,      KC_DOWN,      KC_UP,     KC_RIGHT, KC_MINS,
-    DF(_MOUSE), KC_DQT,  KC_QUOT, KC_LPRN, KC_RPRN, SS_GRV,    KC_EQL,       KC_5,         KC_6,      KC_7,     KC_8,   KC_NO,
+    KC_NO,      KC_PLUS, KC_EQL,  KC_LPRN, KC_RPRN, SS_GRV,    KC_COMM,      KC_5,         KC_6,      KC_7,     KC_8,   KC_NO,
                                   KC_NO,   KC_NO,   KC_NO,     LSFT_T(KC_9), KC_0,         KC_NO
  ),
 
@@ -123,10 +124,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NAVIGON] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-             KC_MUTE,   KC_MPRV,    KC_MPLY,   KC_MNXT,       DM_REC1,   KC_F11,   KC_F1,    KC_F2,    KC_F3,    KC_F4,
-             KC_LGUI,   KC_LALT,    KC_LCTL,   KC_LSFT,       DM_PLY1,   KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
-    KC_NO,   _______,  _______,   _______,  _______,      DM_RSTP,   KC_F12,   KC_F5,    KC_F6,    KC_F7,    KC_F8,   KC_NO,
-                                    _______,  LGUI(KC_SPC),  KC_SPC,    _______, _______, _______
+             KC_MUTE,   KC_MPRV,    KC_MPLY,   KC_MNXT,       OS_SWAP,   KC_F11,   KC_F1,    KC_F2,    KC_F3,    KC_F4,
+             KC_LGUI,   KC_LALT,    KC_LCTL,   KC_LSFT,       SNAP,      KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
+    KC_NO,   DM_REC1,   DM_REC2,    DM_PLY1,   DM_PLY2,       DM_RSTP,   KC_F12,   KC_F5,    KC_F6,    KC_F7,    KC_F8,   KC_NO,
+                                    _______,  LGUI(KC_SPC),  KC_SPC,    QK_BOOT, _______, _______
  ),
 
  /*
@@ -216,42 +217,70 @@ combo_t key_combos[COMBO_COUNT] = {
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-  case OS_SWAP:
-    if (record->event.pressed) {
-      if (!keymap_config.swap_lctl_lgui) {
-        keymap_config.swap_lctl_lgui = false;  // ─── MAC
-      }
-      else {
-        keymap_config.swap_lctl_lgui = true; // ─── WIN
-      }
-      eeconfig_update_keymap(keymap_config.raw);
-      clear_keyboard();  // ──── clear to prevent stuck keys
-      return false;
+    switch (keycode) {
+    case SNAP:
+        if (record->event.pressed) {
+            if (keymap_config.swap_lctl_lgui) {
+                SEND_STRING(SS_LSFT(SS_LWIN("S")));           //WIN
+            } else {
+                SEND_STRING(SS_LSFT(SS_LCMD(SS_LCTL("4"))));  //MAC
+            }
+        }
+        break;
+    case OS_SWAP:
+        if (record->event.pressed) {
+            SEND_STRING ("TRIGGERD");
+            keymap_config.raw = eeconfig_read_keymap();
+            if (keymap_config.raw) {
+                SEND_STRING("RAW?");
+            }
+            if (!keymap_config.swap_lctl_lgui) {
+                SEND_STRING ("Mac?");
+                keymap_config.swap_lctl_lgui = false;  // ─── MAC
+            }
+            else {
+                SEND_STRING ("Win?");
+                keymap_config.swap_lctl_lgui = true; // ─── WIN
+            }
+            eeconfig_update_keymap(keymap_config.raw);
+            clear_keyboard();  // ──── clear to prevent stuck keys
+            SEND_STRING ("Cleared?");
+            return false;
+        }
+    case LT(_NAVIGON, KC_DQUO):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_DQUO);
+            return false;
+        }
+        break;
+    case SS_QUOT:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
+        }
+        return false;
+    case SS_GRV:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
+        }
+        return false;
+    case SS_TILD:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
+        }
+        return false;
     }
-  case LT(_NAVIGON, KC_DQUO):
-    if (record->tap.count && record->event.pressed) {
-      tap_code16(KC_DQUO);
-      return false;
+    return true;
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case LSFT_T(KC_9):
+        // Immediately select the hold action when another key is tapped.
+        return true;
+    default:
+        // Do not select the hold action when another key is tapped.
+        return false;
     }
-    break;
-  case SS_QUOT:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
-    }
-    return false;
-  case SS_GRV:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
-    }
-    return false;
-  case SS_TILD:
-    if (record->event.pressed) {
-      SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
-    }
-    return false;
-  }
-  return true;
 }
 
 void keyboard_pre_init_kb(void) {
