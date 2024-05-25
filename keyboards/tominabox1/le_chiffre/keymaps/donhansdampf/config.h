@@ -18,5 +18,9 @@
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
 
+#define TAPPING_TERM 200
+#define PERMISSIVE_HOLD # Tap preffered
+#define PERMISSIVE_HOLD_PER_KEY
+
 #define COMBO_TERM 35
-#define TAPPING_TERM 250
+#define COMBO_COUNT 10

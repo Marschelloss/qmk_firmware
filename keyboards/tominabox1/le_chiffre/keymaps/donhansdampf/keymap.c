@@ -15,126 +15,117 @@
  */
 #include QMK_KEYBOARD_H
 
-enum layers { _BASE, _NUM, _NAV, _SYM };
+enum layers {
+    _BASED,
+    _NUMBER,
+    _SYSTEM
+};
 
 enum custom_keycodes {
-    SS_QUOT = SAFE_RANGE,
+    NUM = SAFE_RANGE,
+    SYM,
+    SS_QUOT,
     SS_DQT,
     SS_TILD,
     SS_GRV,
-    SS_UE,
-    SS_AE,
-    SS_OE,
-    SS_SZ,
 };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_BASE] = LAYOUT(
-        KC_Q,         KC_W,   KC_E,  KC_R,           KC_T,              KC_NO, KC_Y,    KC_U, KC_I,    KC_O,   KC_P,
-        KC_A,         KC_S,   KC_D,  KC_F,           KC_G,                     KC_H,    KC_J, KC_K,    KC_L,   KC_BSPC,
-        LCTL_T(KC_Z), KC_X,   KC_C,  KC_V,           KC_B,                     KC_N,    KC_M, KC_COMM, KC_DOT, LALT_T(KC_SLSH),
-                              MO(1), LGUI_T(KC_SPC),                           KC_LSFT, MO(2)
+    [_BASED] = LAYOUT(
+                KC_Q,            KC_W,     KC_E,        KC_R,           KC_T,             KC_NO,  KC_Y,     KC_U,                 KC_I,     KC_O,     KC_P,
+                KC_A,            KC_S,     KC_D,        KC_F,           KC_G,                     KC_H,     KC_J,                 KC_K,     KC_L,     KC_BSPC,
+                CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,           KC_B,                     KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),
+                                                        MO(_NUMBER),    LGUI_T(KC_SPC),           KC_LSFT,  LT(_SYSTEM, KC_DQUO)
     ),
-	[_NUM] = LAYOUT(
-        KC_LBRC,       KC_RBRC,       KC_LCBR,       KC_RCBR,       KC_BSLS,      KC_NO,   KC_PLUS, KC_1,    KC_2,    KC_3,    KC_4,
-        KC_LGUI,       KC_LALT,       KC_LCTL,       KC_LSFT,       KC_TILD,               KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_MINS,
-        KC_DQT,        KC_QUOT,       KC_LPRN,       KC_RPRN,       KC_GRV,                KC_EQL,  KC_5,    KC_6,    KC_7,    KC_8,
-                                                     KC_TRNS,       KC_SPC,                LSFT_T(KC_9), LT(2, KC_0)
+    [_NUMBER] = LAYOUT(
+                KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,    KC_NO,  KC_DOT,       KC_1,         KC_2,      KC_3,     KC_4,
+                KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, SS_TILD,            KC_LEFT,      KC_DOWN,      KC_UP,     KC_RIGHT, KC_MINS,
+                KC_PLUS, KC_EQL,  KC_LPRN, KC_RPRN, SS_GRV,             KC_COMM,      KC_5,         KC_6,      KC_7,     KC_8,
+                                           KC_NO,   KC_NO,              LSFT_T(KC_9), KC_0
     ),
-	[_NAV] = LAYOUT(
-        KC_MUTE,    KC_MPRV,    KC_MPLY, KC_MNXT,      KC_NO, KC_NO, KC_F11,  KC_F1,   KC_F2,   KC_F3,      KC_F4,
-        KC_NO,      KC_NO,      KC_NO,   KC_NO,        KC_NO,        KC_HOME, KC_PGDN, KC_PGUP, KC_END,     KC_DEL,
-        KC_NO,      KC_NO,      KC_NO,   KC_NO,        KC_NO,        KC_F12,  KC_F5,   KC_F6,   KC_F7,      KC_F8,
-                                         LGUI(KC_SPC), KC_TRNS,      QK_BOOT, KC_TRNS
-    ),
-	[_SYM] = LAYOUT(
-        KC_F5, KC_F6,  KC_F7,  KC_F8,  KC_NO, KC_NO, KC_NO,   KC_MPRV,       KC_MPLY,       KC_MNXT,       KC_MUTE,
-        KC_F1, KC_F2,  KC_F3,  KC_F4,  KC_NO,        KC_NO,   OSM(MOD_RSFT), OSM(MOD_RCTL), OSM(MOD_RALT), OSM(MOD_RGUI),
-        KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,        KC_NO,   KC_NO,         KC_NO,         KC_NO,         KC_NO,
-                               KC_NO,  KC_NO,        QK_BOOT, KC_NO
+    [_SYSTEM] = LAYOUT(
+             KC_MUTE,   KC_MPRV,    KC_MPLY,   KC_MNXT,       KC_NO,     KC_NO, KC_F11,   KC_F1,    KC_F2,    KC_F3,    KC_F4,
+             KC_LGUI,   KC_LALT,    KC_LCTL,   KC_LSFT,       KC_NO,            KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
+             DM_REC1,   DM_REC2,    DM_PLY1,   DM_PLY2,       DM_RSTP,          KC_F12,   KC_F5,    KC_F6,    KC_F7,    KC_F8,
+                                               LGUI(KC_SPC),  KC_SPC,           QK_BOOT,  KC_NO
     )
 };
 // clang-format on
 
-/* // --- Tri-Layer */
-/* layer_state_t layer_state_set_user(layer_state_t state) { */
-/*     return update_tri_layer_state(state, _NUM, _NAV, _SYM); */
-/* } */
+// ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+// │ C O M B O S
+// └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+// ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
-// --- Combos
-#ifdef COMBO_ENABLE
-enum combo_events {
-    COMBO_RET,
-    COMBO_ESC,
-    COMBO_TAB,
-    COMBO_COLO,
-    COMBO_SEMI,
-    COMBO_QT,
-    COMBO_SCREENSHOT,
-    COMBO_PASS,
-    COMBO_EMOJI,
+enum combos {
+  D_F_ESC,
+  J_K_ENT,
+  M_COMM_COLN,
+  COMM_DOT_SCLN,
+  C_V_TAB,
+  X_C_QUOT,
+
 };
 
-const uint16_t PROGMEM combo_esc[]        = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_ret[]        = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_tab[]        = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM combo_colo[]       = {KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM combo_semi[]       = {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM combo_qt[]         = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM combo_screenshot[] = {KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM combo_pass[]       = {KC_A, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_emoji[]      = {KC_A, KC_D, COMBO_END};
+const uint16_t PROGMEM d_f_esc[] = { KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM j_k_ent[] = { KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM m_comm_coln[] = { KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM comm_dot_scln[] = { KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM c_v_tab[] = { KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM x_c_quot[] = { KC_X, KC_C, COMBO_END};
 
-combo_t key_combos[] = {
-    [COMBO_ESC] = COMBO(combo_esc, KC_ESC), [COMBO_RET] = COMBO(combo_ret, KC_ENT), [COMBO_TAB] = COMBO(combo_tab, KC_TAB), [COMBO_COLO] = COMBO(combo_colo, KC_COLN), [COMBO_SEMI] = COMBO(combo_semi, KC_SCLN), [COMBO_QT] = COMBO(combo_qt, SS_QUOT), [COMBO_SCREENSHOT] = COMBO(combo_screenshot, LGUI(LSFT(KC_4))), [COMBO_PASS] = COMBO(combo_pass, LGUI(LSFT(KC_SPC))), [COMBO_EMOJI] = COMBO(combo_emoji, LGUI(LCTL(KC_SPC))),
+combo_t key_combos[COMBO_COUNT] = {
+  [D_F_ESC] = COMBO(d_f_esc, KC_ESC),
+  [J_K_ENT] = COMBO(j_k_ent, KC_ENT),
+  [M_COMM_COLN] = COMBO(m_comm_coln, KC_COLN),
+  [COMM_DOT_SCLN] = COMBO(comm_dot_scln, KC_SCLN),
+  [C_V_TAB] = COMBO(c_v_tab, KC_TAB),
+  [X_C_QUOT] = COMBO(x_c_quot, SS_QUOT),
+
 };
-#endif
 
 // --- Macros
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case SS_QUOT:
-            if (record->event.pressed) {
-                SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
-            }
+    case SS_QUOT:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
+        }
+        return false;
+    case SS_DQT:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LSFT("'") SS_TAP(X_SPC));
+        }
+        return false;
+    case SS_GRV:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
+        }
+        return false;
+    case SS_TILD:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
+        }
+        return false;
+    case LT(_SYSTEM, KC_DQUO):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_DQUO);
             return false;
-        case SS_DQT:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LSFT("'") SS_TAP(X_SPC));
-            }
-            return false;
-        case SS_GRV:
-            if (record->event.pressed) {
-                SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
-            }
-            return false;
-        case SS_TILD:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
-            }
-            return false;
-        case SS_UE:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LSFT("'") "u");
-            }
-            return false;
-        case SS_AE:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LSFT("'") "a");
-            }
-            return false;
-        case SS_OE:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LSFT("'") "o");
-            }
-            return false;
-        case SS_SZ:
-            if (record->event.pressed) {
-                SEND_STRING(SS_RALT("s"));
-            }
-            return false;
+        }
+        break;
     }
 
     return true;
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case LSFT_T(KC_9):
+        // Immediately select the hold action when another key is tapped.
+        return true;
+    default:
+        // Do not select the hold action when another key is tapped.
+        return false;
+    }
 }
