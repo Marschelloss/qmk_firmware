@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_Q,            KC_W,     KC_E,        KC_R,                   KC_T,             KC_NO,  KC_Y,     KC_U,                 KC_I,     KC_O,     KC_P,
                 KC_A,            KC_S,     KC_D,        KC_F,                   KC_G,                     KC_H,     KC_J,                 KC_K,     KC_L,     KC_BSPC,
                 CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,                   KC_B,                     KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),
-                                                        LT(_NUMBER, KC_TAB),    LGUI_T(KC_SPC),           KC_LSFT,  LT(_SYSTEM, KC_DQUO)
+                                                        MO(_NUMBER),            LGUI_T(KC_SPC),           KC_LSFT,  LT(_SYSTEM, KC_DQUO)
     ),
     [_NUMBER] = LAYOUT(
                 KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,    KC_NO,  KC_DOT,       KC_1,         KC_2,      KC_3,     KC_4,
@@ -51,13 +51,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              KC_MUTE,   KC_MPRV,    KC_MPLY,   KC_MNXT,       KC_NO,     KC_NO, KC_F11,   KC_F1,    KC_F2,    KC_F3,    KC_F4,
              KC_LGUI,   KC_LALT,    KC_LCTL,   KC_LSFT,       DF(_MOUSE),       KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
              DM_REC1,   DM_REC2,    DM_PLY1,   DM_PLY2,       DM_RSTP,          KC_F12,   KC_F5,    KC_F6,    KC_F7,    KC_F8,
-                                               LGUI(KC_SPC),  KC_SPC,           QK_BOOT,  KC_NO
+                                               LGUI(KC_SPC),  KC_TAB,           QK_BOOT,  KC_NO
     ),
     [_MOUSE] = LAYOUT(
-                DF(_BASED), KC_WH_D,   KC_MS_U,   KC_WH_U,   KC_NO,       KC_NO, KC_NO,  KC_PGUP,   KC_UP,     KC_PGDN,    KC_NO,
-                KC_NO,      KC_MS_L,   KC_MS_D,   KC_MS_R,   KC_NO,              RATE_5, KC_LEFT,   KC_DOWN,   KC_RIGHT,   RATE_4,
-                KC_NO,      KC_NO,     KC_NO,     KC_NO,     KC_NO,              KC_NO,  KC_NO,     KC_NO,     KC_NO,      KC_NO,
-                                                  KC_BTN2,   KC_BTN1,            KC_NO,  KC_NO
+                DF(_BASED), KC_WH_D,   KC_MS_U,   KC_WH_U,   KC_NO,       KC_NO, KC_NO,   KC_PGUP,   KC_UP,     KC_PGDN,    KC_NO,
+                KC_NO,      KC_MS_L,   KC_MS_D,   KC_MS_R,   KC_NO,              RATE_5,  KC_LEFT,   KC_DOWN,   KC_RIGHT,   RATE_4,
+                KC_NO,      KC_NO,     KC_NO,     KC_NO,     KC_NO,              KC_NO,   KC_NO,     KC_NO,     KC_NO,      KC_NO,
+                                                  KC_BTN2,   KC_BTN1,            KC_BTN2, KC_BTN1
     )
 };
 // clang-format on
@@ -141,9 +141,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case LSFT_T(KC_9):
-        // Immediately select the hold action when another key is tapped.
-        return true;
-    case LT(_NUMBER, KC_TAB):
         // Immediately select the hold action when another key is tapped.
         return true;
     default:
