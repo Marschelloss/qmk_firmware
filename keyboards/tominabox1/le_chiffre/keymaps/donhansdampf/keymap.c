@@ -30,7 +30,7 @@ enum custom_keycodes {
     SS_TILD,
     SS_GRV,
     RATE_4,
-    RATE_5
+    RATE_5,
     SS_DEAD,
 };
 
