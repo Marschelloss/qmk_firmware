@@ -29,8 +29,12 @@ enum custom_keycodes {
     SS_DQT,
     SS_TILD,
     SS_GRV,
+<<<<<<< HEAD
     RATE_4,
     RATE_5
+=======
+    SS_DEAD,
+>>>>>>> d824e47eed (save)
 };
 
 // clang-format off
@@ -39,7 +43,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_Q,            KC_W,     KC_E,        KC_R,                   KC_T,             KC_NO,  KC_Y,     KC_U,                 KC_I,     KC_O,     KC_P,
                 KC_A,            KC_S,     KC_D,        KC_F,                   KC_G,                     KC_H,     KC_J,                 KC_K,     KC_L,     KC_BSPC,
                 CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,                   KC_B,                     KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),
+<<<<<<< HEAD
                                                         MO(_NUMBER),            LGUI_T(KC_SPC),           KC_LSFT,  LT(_SYSTEM, KC_DQUO)
+=======
+                                                        LT(_NUMBER, KC_TAB),    LGUI_T(KC_SPC),           KC_LSFT,  LT(_SYSTEM, KC_TAB)
+>>>>>>> d824e47eed (save)
     ),
     [_NUMBER] = LAYOUT(
                 KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_BSLS,    KC_NO,  KC_DOT,       KC_1,         KC_2,      KC_3,     KC_4,
@@ -54,10 +62,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                LGUI(KC_SPC),  KC_TAB,           QK_BOOT,  KC_NO
     ),
     [_MOUSE] = LAYOUT(
+<<<<<<< HEAD
                 DF(_BASED), KC_WH_D,   KC_MS_U,   KC_WH_U,   KC_NO,       KC_NO, KC_NO,   KC_PGUP,   KC_UP,     KC_PGDN,    KC_NO,
                 KC_NO,      KC_MS_L,   KC_MS_D,   KC_MS_R,   KC_NO,              RATE_5,  KC_LEFT,   KC_DOWN,   KC_RIGHT,   RATE_4,
                 KC_NO,      KC_NO,     KC_NO,     KC_NO,     KC_NO,              KC_NO,   KC_NO,     KC_NO,     KC_NO,      KC_NO,
                                                   KC_BTN2,   KC_BTN1,            KC_BTN2, KC_BTN1
+=======
+                KC_NO,  KC_WH_D,   KC_MS_U,   KC_WH_U,   KC_NO,       KC_NO, KC_NO,     KC_PGUP,   KC_UP,     KC_PGDN,    KC_NO,
+                KC_NO,  KC_MS_L,   KC_MS_D,   KC_MS_R,   DF(_BASED),         KC_NO,     KC_LEFT,   KC_DOWN,   KC_RIGHT,   KC_NO,
+                KC_NO,  KC_NO,     KC_NO,     KC_NO,     KC_NO,              KC_NO,     KC_NO,     KC_NO,     KC_NO,      KC_NO,
+                                              KC_BTN2,   KC_BTN1,            KC_BTN2,   KC_BTN1
+>>>>>>> d824e47eed (save)
     )
 };
 // clang-format on
@@ -74,7 +89,7 @@ enum combos {
   COMM_DOT_SCLN,
   C_V_TAB,
   X_C_QUOT,
-
+  A_BSPC_DEAD,
 };
 
 const uint16_t PROGMEM d_f_esc[] = { KC_D, KC_F, COMBO_END};
@@ -83,6 +98,7 @@ const uint16_t PROGMEM m_comm_coln[] = { KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM comm_dot_scln[] = { KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM c_v_tab[] = { KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM x_c_quot[] = { KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM a_bspc_dead[] = { KC_G, KC_H, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [D_F_ESC] = COMBO(d_f_esc, KC_ESC),
@@ -91,6 +107,7 @@ combo_t key_combos[COMBO_COUNT] = {
   [COMM_DOT_SCLN] = COMBO(comm_dot_scln, KC_SCLN),
   [C_V_TAB] = COMBO(c_v_tab, KC_TAB),
   [X_C_QUOT] = COMBO(x_c_quot, SS_QUOT),
+  [A_BSPC_DEAD] = COMBO(a_bspc_dead, SS_DEAD),
 
 };
 
@@ -107,6 +124,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             SEND_STRING("r5");
         }
         break;
+    case SS_DEAD:
+        if (record->event.pressed) {
+            tap_code16(KC_DQUO);
+        }
+        return false;
     case SS_QUOT:
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
