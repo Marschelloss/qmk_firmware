@@ -29,6 +29,8 @@ enum custom_keycodes {
     SS_DQT,
     SS_TILD,
     SS_GRV,
+    RATE_4,
+    RATE_5
 };
 
 // clang-format off
@@ -47,15 +49,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_SYSTEM] = LAYOUT(
              KC_MUTE,   KC_MPRV,    KC_MPLY,   KC_MNXT,       KC_NO,     KC_NO, KC_F11,   KC_F1,    KC_F2,    KC_F3,    KC_F4,
-             KC_LGUI,   KC_LALT,    KC_LCTL,   KC_LSFT,       KC_NO,            KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
+             KC_LGUI,   KC_LALT,    KC_LCTL,   KC_LSFT,       DF(_MOUSE),       KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
              DM_REC1,   DM_REC2,    DM_PLY1,   DM_PLY2,       DM_RSTP,          KC_F12,   KC_F5,    KC_F6,    KC_F7,    KC_F8,
                                                LGUI(KC_SPC),  KC_SPC,           QK_BOOT,  KC_NO
     ),
     [_MOUSE] = LAYOUT(
-                KC_NO,  KC_WH_D,   KC_MS_U,   KC_WH_U,   KC_NO,       KC_NO, KC_NO,  KC_PGUP,   KC_UP,     KC_PGDN,    KC_NO,
-                KC_NO,  KC_MS_L,   KC_MS_D,   KC_MS_R,   DF(_BASED),         KC_NO,  KC_LEFT,   KC_DOWN,   KC_RIGHT,   KC_NO,
-                KC_NO,  KC_NO,     KC_NO,     KC_NO,     KC_NO,              KC_NO,  KC_NO,     KC_NO,     KC_NO,      KC_NO,
-                                              KC_BTN2,   KC_BTN1,            KC_NO,  KC_NO
+                DF(_BASED), KC_WH_D,   KC_MS_U,   KC_WH_U,   KC_NO,       KC_NO, KC_NO,  KC_PGUP,   KC_UP,     KC_PGDN,    KC_NO,
+                KC_NO,      KC_MS_L,   KC_MS_D,   KC_MS_R,   KC_NO,              RATE_5, KC_LEFT,   KC_DOWN,   KC_RIGHT,   RATE_4,
+                KC_NO,      KC_NO,     KC_NO,     KC_NO,     KC_NO,              KC_NO,  KC_NO,     KC_NO,     KC_NO,      KC_NO,
+                                                  KC_BTN2,   KC_BTN1,            KC_NO,  KC_NO
     )
 };
 // clang-format on
@@ -95,6 +97,16 @@ combo_t key_combos[COMBO_COUNT] = {
 // --- Macros
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+    case RATE_4:
+        if (record->event.pressed) {
+            SEND_STRING("r4");
+        }
+        break;
+    case RATE_5:
+        if (record->event.pressed) {
+            SEND_STRING("r5");
+        }
+        break;
     case SS_QUOT:
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));

@@ -41,6 +41,8 @@ enum custom_keycodes {
     NUM = SAFE_RANGE,
     NAV,
     OS_SWAP,
+    RATE_4,
+    RATE_5,
     SNAP,
     SS_QUOT,
     SS_DQT,
@@ -77,10 +79,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_BASED] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-                KC_Q,            KC_W,     KC_E,        KC_R,           KC_T,               KC_Y,     KC_U,                 KC_I,     KC_O,     KC_P,
-                KC_A,            KC_S,     KC_D,        KC_F,           KC_G,               KC_H,     KC_J,                 KC_K,     KC_L,     KC_BSPC,
-    DF(_MOUSE), CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,           KC_B,               KC_N,     KC_M,                 KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),  KC_RALT,
-                                           KC_NO,       MO(_NUMBER),    LGUI_T(KC_SPC),     KC_LSFT,  LT(_NAVIGON, KC_DQUO), KC_NO
+                KC_Q,            KC_W,     KC_E,        KC_R,                   KC_T,               KC_Y,     KC_U,                  KC_I,     KC_O,     KC_P,
+                KC_A,            KC_S,     KC_D,        KC_F,                   KC_G,               KC_H,     KC_J,                  KC_K,     KC_L,     KC_BSPC,
+    DF(_MOUSE), CTL_T(KC_Z),     KC_X,     KC_C,        KC_V,                   KC_B,               KC_N,     KC_M,                  KC_COMM,  KC_DOT,   ALT_T(KC_SLSH),  KC_RALT,
+                                           KC_NO,       LT(_NUMBER, KC_TAB),    LGUI_T(KC_SPC),     KC_LSFT,  LT(_NAVIGON, KC_DQUO), KC_NO
  ),
  /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -148,10 +150,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_MOUSE] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-                _______,  KC_WH_D,   KC_MS_U,   KC_WH_U,   _______,  _______,  _______,  _______,  _______,   _______,
-                _______,  KC_MS_L,   KC_MS_D,   KC_MS_R,   _______,  _______,  _______,  _______,  _______,   _______,
+                _______,  KC_WH_D,   KC_MS_U,   KC_WH_U,   _______,  _______,  KC_PGDN,   KC_UP,     KC_PGUP,    _______,
+                _______,  KC_MS_L,   KC_MS_D,   KC_MS_R,   _______,  RATE_5,    KC_LEFT,   KC_DOWN,   KC_RIGHT,   RATE_4,
     DF(_BASED), _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______, _______,
-                                      KC_BTN3,   KC_BTN2,   KC_BTN1,   _______,  _______,  _______
+                                      KC_BTN3,   KC_BTN2,   KC_BTN1,   KC_BTN1,   KC_BTN2,   KC_BTN3
  )
 /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -218,6 +220,16 @@ combo_t key_combos[COMBO_COUNT] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+    case RATE_4:
+        if (record->event.pressed) {
+            SEND_STRING("r4");
+        }
+        break;
+    case RATE_5:
+        if (record->event.pressed) {
+            SEND_STRING("r5");
+        }
+        break;
     case SNAP:
         if (record->event.pressed) {
             if (keymap_config.swap_lctl_lgui) {
