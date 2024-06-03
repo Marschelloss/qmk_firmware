@@ -8,7 +8,7 @@ for more options.
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 
-#define TAPPING_TERM 200
+#define TAPPING_TERM 220
 #define PERMISSIVE_HOLD # Tap preffered
 #define PERMISSIVE_HOLD_PER_KEY
 
