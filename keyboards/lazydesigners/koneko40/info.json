@@ -13,6 +13,7 @@
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
+        "combo": true,
         "command": false,
         "console": false
     },
