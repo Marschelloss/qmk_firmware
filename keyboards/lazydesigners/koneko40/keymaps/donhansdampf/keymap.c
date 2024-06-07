@@ -135,6 +135,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case C_SFT:
             // Immediately select the hold action when another key is tapped.
             return true;
+        case L_SYM:
+            // Does it also work with custom keycodes?!
+            return true;
         default:
             // Do not select the hold action when another key is tapped.
             return false;
