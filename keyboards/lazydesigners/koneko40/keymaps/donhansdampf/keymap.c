@@ -20,28 +20,32 @@ enum custom_keycodes {
     SS_DEAD,
 };
 
+// Hold Taps
 #define C_CMD LGUI_T(KC_SPC)
 #define C_CTL LCTL_T(KC_Z)
 #define C_ALT LALT_T(KC_SLSH)
 #define C_SFT LSFT_T(KC_9)
 
-#define C_SPC LGUI(KC_SPC)
-
+// Layer (Taps)
 #define L_NUM MO(_NUMBER)
 #define L_SYM LT(_SYMBOL, KC_DQUO)
 #define L_MSE DF(_MOUSE)
 #define L_BSE DF(_BASED)
 #define L_GMN MO(_GAMENR)
 
+// Layer Switch
 #define GAME TO(_GAME)
 #define BASE TO(_BASED)
+
+// Shortcuts
+#define C_SPC LGUI(KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASED] = LAYOUT_ortho(
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     GAME,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
-        KC_LCTL,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_NO,    KC_H,     KC_J,     KC_K,     KC_L,     KC_BSPC,
-        KC_LALT,  C_CTL,    KC_X,     KC_C,     KC_V,     KC_B,     KC_NO,    KC_N,     KC_M,     KC_COMM,  KC_DOT,   C_ALT,
-        KC_ESC,   KC_NO,    KC_NO,    KC_NO,    L_NUM,    C_CMD,    KC_NO,    KC_LSFT,  L_SYM,    KC_NO,    KC_NO,    KC_NO
+        KC_LCTL,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_WH_U,  KC_H,     KC_J,     KC_K,     KC_L,     KC_BSPC,
+        KC_LALT,  C_CTL,    KC_X,     KC_C,     KC_V,     KC_B,     KC_WH_D,  KC_N,     KC_M,     KC_COMM,  KC_DOT,   C_ALT,
+        KC_MS_L,  KC_MS_D,  KC_MS_U,  KC_MS_R,  L_NUM,    C_CMD,    KC_NO,    KC_LSFT,  L_SYM,    KC_BTN1,  KC_BTN2,  KC_BTN3
     ),
     [_NUMBER] = LAYOUT_ortho(
         KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_1,     KC_2,     KC_3,     KC_4,
