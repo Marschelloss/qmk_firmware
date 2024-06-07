@@ -26,7 +26,7 @@ enum custom_keycodes {
 #define C_SPC LGUI(KC_SPC)
 
 #define L_NUM MO(_NUMBER)
-#define L_SYM MO(_SYMBOL)
+#define L_SYM LT(_SYMBOL, KC_DQUO)
 #define L_MSE DF(_MOUSE)
 #define L_BSE DF(_BASED)
 
@@ -95,37 +95,37 @@ combo_t key_combos[COMBO_COUNT] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-    case SS_DEAD:
-        if (record->event.pressed) {
-            tap_code16(KC_DQUO);
-        }
-        return false;
-    case SS_QUOT:
-        if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
-        }
-        return false;
-    case SS_DQT:
-        if (record->event.pressed) {
-            SEND_STRING(SS_LSFT("'") SS_TAP(X_SPC));
-        }
-        return false;
-    case SS_GRV:
-        if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
-        }
-        return false;
-    case SS_TILD:
-        if (record->event.pressed) {
-            SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
-        }
-        return false;
-    case L_SYM:
-        if (record->tap.count && record->event.pressed) {
-            tap_code16(KC_DQUO);
+        case SS_DEAD:
+            if (record->event.pressed) {
+                tap_code16(KC_DQUO);
+            }
             return false;
-        }
-        break;
+        case SS_QUOT:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_QUOT) SS_TAP(X_SPC));
+            }
+            return false;
+        case SS_DQT:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT("'") SS_TAP(X_SPC));
+            }
+            return false;
+        case SS_GRV:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_GRV) SS_TAP(X_SPC));
+            }
+            return false;
+        case SS_TILD:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LSFT("`") SS_TAP(X_SPC));
+            }
+            return false;
+        case L_SYM:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_DQUO);
+                return false;
+            }
+            break;
     }
     return true;
 }
@@ -133,10 +133,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case C_SFT:
-        // Immediately select the hold action when another key is tapped.
-        return true;
-    default:
-        // Do not select the hold action when another key is tapped.
-        return false;
+            // Immediately select the hold action when another key is tapped.
+            return true;
+        default:
+            // Do not select the hold action when another key is tapped.
+            return false;
     }
 }
