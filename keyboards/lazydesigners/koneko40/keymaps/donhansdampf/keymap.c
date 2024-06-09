@@ -49,8 +49,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_NUMBER] = LAYOUT_ortho(
         KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_1,     KC_2,     KC_3,     KC_4,
-        KC_NO,    KC_LGUI,  KC_LALT,  KC_LCTL,  KC_LSFT,  KC_NO,    KC_NO,    KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, KC_MINS,
-        KC_NO,    KC_PLUS,  KC_EQL,   KC_DOT,   KC_COMM,  KC_NO,    KC_NO,    KC_NO,    KC_5,     KC_6,     KC_7,     KC_8,
+        KC_NO,    KC_LGUI,  KC_LALT,  KC_LCTL,  KC_LSFT,  SS_TILD,  KC_NO,    KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, KC_MINS,
+        KC_NO,    KC_PLUS,  KC_EQL,   KC_DOT,   KC_COMM,  SS_GRV,   KC_NO,    KC_NO,    KC_5,     KC_6,     KC_7,     KC_8,
         KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    C_SFT,    KC_0,     KC_NO,    KC_NO,    KC_NO
     ),
     [_SYMBOL] = LAYOUT_ortho(
