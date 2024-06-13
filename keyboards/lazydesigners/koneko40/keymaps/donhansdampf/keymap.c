@@ -29,9 +29,8 @@ enum custom_keycodes {
 // Layer (Taps)
 #define L_NUM MO(_NUMBER)
 #define L_SYM LT(_SYMBOL, KC_DQUO)
-#define L_MSE DF(_MOUSE)
-#define L_BSE DF(_BASED)
 #define L_GMN MO(_GAMENR)
+#define L_MSE LT(_MOUSE, KC_LCTL)
 
 // Layer Switch
 #define GAME TO(_GAME)
@@ -43,9 +42,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASED] = LAYOUT_ortho(
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     GAME,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
-        KC_LCTL,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_WH_U,  KC_H,     KC_J,     KC_K,     KC_L,     KC_BSPC,
-        KC_LALT,  C_CTL,    KC_X,     KC_C,     KC_V,     KC_B,     KC_WH_D,  KC_N,     KC_M,     KC_COMM,  KC_DOT,   C_ALT,
-        KC_MS_L,  KC_MS_D,  KC_MS_U,  KC_MS_R,  L_NUM,    C_CMD,    KC_NO,    KC_LSFT,  L_SYM,    KC_BTN1,  KC_BTN2,  KC_BTN3
+        L_MSE,    KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_NO,    KC_H,     KC_J,     KC_K,     KC_L,     KC_BSPC,
+        KC_LALT,  C_CTL,    KC_X,     KC_C,     KC_V,     KC_B,     KC_NO,    KC_N,     KC_M,     KC_COMM,  KC_DOT,   C_ALT,
+        KC_ESC,   KC_NO,    KC_NO,    KC_NO,    L_NUM,    C_CMD,    KC_NO,    KC_LSFT,  L_SYM,    KC_NO,    KC_NO,    KC_ENT
     ),
     [_NUMBER] = LAYOUT_ortho(
         KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_1,     KC_2,     KC_3,     KC_4,
@@ -60,10 +59,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_BOOT,  KC_NO,    KC_NO,    KC_NO,    KC_TAB,   C_SPC,    KC_NO,    KC_NO,    KC_NO,    KC_F9,    KC_F10,   KC_F11
     ),
     [_MOUSE] = LAYOUT_ortho(
-        KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,
-        KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,
-        KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,
-        KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO
+        BASE,     KC_NO,    KC_WH_D,  KC_MS_U,  KC_WH_U,  KC_NO,    KC_NO,    KC_NO,    KC_PGDN,  KC_UP,    KC_PGUP,  KC_NO,
+        BASE,     KC_NO,    KC_MS_L,  KC_MS_D,  KC_MS_R,  KC_NO,    KC_NO,    KC_NO,    KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_NO,
+        BASE,     KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,
+        BASE,     KC_NO,    KC_NO,    KC_NO,    KC_BTN2,  KC_BTN1,  KC_BTN3,  KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO
     ),
     [_GAME] = LAYOUT_ortho(
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_NO,    KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
@@ -153,6 +152,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
+        case L_MSE:
+            if (record->tap.count && record->event.pressed) {
+                // Tap Function
+                layer_move(_MOUSE);
+            } else if (record->event.pressed) {
+                // Hold Function
+                register_code(KC_LCTL);
+           } else {
+                // (Hold) Keyup
+                unregister_code(KC_LCTL);
+            }
+            return false;
     }
     return true;
 }
