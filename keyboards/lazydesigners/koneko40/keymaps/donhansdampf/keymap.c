@@ -48,14 +48,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_NUMBER] = LAYOUT_ortho(
         KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_1,     KC_2,     KC_3,     KC_4,
-        KC_NO,    KC_LGUI,  KC_LALT,  KC_LCTL,  KC_LSFT,  SS_TILD,  KC_NO,    KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, KC_MINS,
-        KC_NO,    KC_PLUS,  KC_EQL,   KC_DOT,   KC_COMM,  SS_GRV,   KC_NO,    KC_NO,    KC_5,     KC_6,     KC_7,     KC_8,
+        KC_NO,    KC_LGUI,  KC_LALT,  KC_LCTL,  KC_LSFT,  KC_NO,    KC_NO,    KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT, KC_MINS,
+        KC_NO,    KC_PLUS,  KC_EQL,   KC_DOT,   KC_COMM,  KC_NO,    KC_NO,    KC_NO,    KC_5,     KC_6,     KC_7,     KC_8,
         KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    C_SFT,    KC_0,     KC_NO,    KC_NO,    KC_NO
     ),
     [_SYMBOL] = LAYOUT_ortho(
         KC_NO,    KC_LBRC,  KC_RBRC,  KC_LCBR,  KC_RCBR,  KC_NO,    KC_NO,    KC_F12,   KC_F1,    KC_F2,    KC_F3,    KC_F4,
-        KC_NO,    KC_LGUI,  KC_LALT,  KC_LCTL,  KC_LSFT,  KC_NO,    KC_NO,    KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
-        KC_NO,    KC_BSLS,  KC_PIPE,  KC_LPRN,  KC_RPRN,  KC_NO,    KC_NO,    KC_F13,   KC_F5,    KC_F6,    KC_F7,    KC_F8,
+        KC_NO,    KC_LGUI,  KC_LALT,  KC_LCTL,  KC_LSFT,  SS_TILD,  KC_NO,    KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   KC_DEL,
+        KC_NO,    KC_BSLS,  KC_PIPE,  KC_LPRN,  KC_RPRN,  SS_GRV,   KC_NO,    KC_F13,   KC_F5,    KC_F6,    KC_F7,    KC_F8,
         QK_BOOT,  KC_NO,    KC_NO,    KC_NO,    KC_TAB,   C_SPC,    KC_NO,    KC_NO,    KC_NO,    KC_F9,    KC_F10,   KC_F11
     ),
     [_MOUSE] = LAYOUT_ortho(
