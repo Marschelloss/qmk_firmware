@@ -45,7 +45,7 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASED] = LAYOUT(
-        KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,    KC_NO,   KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
+        KC_TAB,   KC_W,     KC_E,     KC_R,     KC_T,    KC_NO,   KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,
         KC_A,     KC_S,     KC_D,     KC_F,     KC_G,             KC_H,     KC_J,     KC_K,     KC_L,     KC_BSPC,
         C_CTL,    KC_X,     KC_C,     KC_V,     KC_B,             KC_N,     KC_M,     KC_COMM,  KC_DOT,   C_ALT,
                                       L_NUM,    C_CMD,            KC_LSFT,  L_SYM
@@ -94,6 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 enum combos {
+  TAB_W_Q,
   D_F_ESC,
   J_K_ENT,
   M_COMM_COLN,
@@ -102,6 +103,7 @@ enum combos {
   X_C_QUOT,
 };
 
+const uint16_t PROGMEM tab_w_q[] = { KC_TAB, KC_W, COMBO_END};
 const uint16_t PROGMEM d_f_esc[] = { KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM j_k_ent[] = { KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM m_comm_coln[] = { KC_M, KC_COMM, COMBO_END};
@@ -110,6 +112,7 @@ const uint16_t PROGMEM c_v_dqt[] = { KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM x_c_quot[] = { KC_X, KC_C, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
+  [TAB_W_Q] = COMBO(tab_w_q, KC_Q),
   [D_F_ESC] = COMBO(d_f_esc, KC_ESC),
   [J_K_ENT] = COMBO(j_k_ent, KC_ENT),
   [M_COMM_COLN] = COMBO(m_comm_coln, KC_COLN),
