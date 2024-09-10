@@ -94,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 enum combos {
-  TAB_W_Q,
+  E_W_Q,
   D_F_ESC,
   J_K_ENT,
   M_COMM_COLN,
@@ -103,7 +103,7 @@ enum combos {
   X_C_QUOT,
 };
 
-const uint16_t PROGMEM tab_w_q[] = { KC_TAB, KC_W, COMBO_END};
+const uint16_t PROGMEM e_w_q[] = { KC_E, KC_W, COMBO_END};
 const uint16_t PROGMEM d_f_esc[] = { KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM j_k_ent[] = { KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM m_comm_coln[] = { KC_M, KC_COMM, COMBO_END};
@@ -112,7 +112,7 @@ const uint16_t PROGMEM c_v_dqt[] = { KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM x_c_quot[] = { KC_X, KC_C, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-  [TAB_W_Q] = COMBO(tab_w_q, KC_Q),
+  [E_W_Q] = COMBO(e_w_q, KC_Q),
   [D_F_ESC] = COMBO(d_f_esc, KC_ESC),
   [J_K_ENT] = COMBO(j_k_ent, KC_ENT),
   [M_COMM_COLN] = COMBO(m_comm_coln, KC_COLN),
